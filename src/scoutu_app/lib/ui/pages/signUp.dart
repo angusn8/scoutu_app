@@ -21,7 +21,7 @@ class SignUp extends StatelessWidget {
           style: TextStyle(fontSize: 36.0, color: textColor),
         ),
         centerTitle: true,
-        backgroundColor: backgroundColor,
+        backgroundColor: blueColor,
         elevation: 0,
         iconTheme: IconThemeData(color: textColor),
       ),

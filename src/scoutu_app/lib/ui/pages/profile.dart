@@ -23,7 +23,7 @@ class Profile extends StatelessWidget {
           style: TextStyle(color: textColor),
         ),
         centerTitle: true,
-        backgroundColor: backgroundColor,
+        backgroundColor: blueColor,
         elevation: 0,
       ),
       body: BlocProvider<ProfileBloc>(

@@ -18,7 +18,7 @@ class Login extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: backgroundColor,
+        backgroundColor: blueColor,
         elevation: 0,
       ),
       body: BlocProvider<LoginBloc>(

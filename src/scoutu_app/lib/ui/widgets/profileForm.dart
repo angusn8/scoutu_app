@@ -368,7 +368,7 @@ Widget textFieldWidget(controller, text, size) {
       controller: controller,
       decoration: InputDecoration(
         labelText: text,
-        labelStyle: TextStyle(color: textColor, fontSize: size.height * 0.03),
+        labelStyle: TextStyle(color: textColor, fontSize: size.height * 0.02),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(color: textColor, width: 1.0),
         ),
