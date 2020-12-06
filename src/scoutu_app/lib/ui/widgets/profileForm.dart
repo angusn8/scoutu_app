@@ -325,31 +325,40 @@ class _ProfileFormState extends State<ProfileForm> {
                     ],
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(vertical: size.height * 0.02),
-                    child: GestureDetector(
-                      onTap: () {
-                        if (isButtonEnabled(state)) {
-                          _onSubmitted();
-                        } else {}
-                      },
-                      child: Container(
+                      padding:
+                          EdgeInsets.symmetric(vertical: size.height * 0.02),
+                      child: SizedBox(
                         width: size.width * 0.8,
-                        height: size.height * 0.06,
-                        decoration: BoxDecoration(
+                        child: RaisedButton(
                           color: isButtonEnabled(state) ? textColor : blueColor,
-                          borderRadius:
-                              BorderRadius.circular(size.height * 0.05),
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(size.height * 0.05)),
+                          onPressed: () {
+                            if (isButtonEnabled(state)) {
+                              _onSubmitted();
+                            } else {}
+                          },
+                          child: Container(
+                            width: size.width * 0.8,
+                            height: size.height * 0.06,
+                            decoration: BoxDecoration(
+                              color: isButtonEnabled(state)
+                                  ? textColor
+                                  : blueColor,
+                              borderRadius:
+                                  BorderRadius.circular(size.height * 0.05),
+                            ),
+                            child: Center(
+                                child: Text(
+                              "Save",
+                              style: TextStyle(
+                                  fontSize: size.height * 0.025,
+                                  color: Colors.blue),
+                            )),
+                          ),
                         ),
-                        child: Center(
-                            child: Text(
-                          "Save",
-                          style: TextStyle(
-                              fontSize: size.height * 0.025,
-                              color: Colors.blue),
-                        )),
-                      ),
-                    ),
-                  )
+                      ))
                 ],
               ),
             ),
