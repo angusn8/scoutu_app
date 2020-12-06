@@ -193,7 +193,8 @@ class _ProfileFormState extends State<ProfileForm> {
                       _bioController, "Enter a bio with relevant info", size),
                   Text(
                     "What high school class are you?",
-                    style: TextStyle(color: textColor, fontSize: 20),
+                    style: TextStyle(
+                        color: textColor, fontSize: size.height * 0.02),
                   ),
                   DropdownButton(
                     value: dropdownValue,
@@ -231,7 +232,8 @@ class _ProfileFormState extends State<ProfileForm> {
                         child: Center(
                             child: Text(
                           "Are you a coach or an athlete?",
-                          style: TextStyle(color: textColor, fontSize: 20),
+                          style: TextStyle(
+                              color: textColor, fontSize: size.height * 0.02),
                           textAlign: TextAlign.center,
                         )),
                       ),
@@ -264,7 +266,8 @@ class _ProfileFormState extends State<ProfileForm> {
                         child: Center(
                             child: Text(
                           "Who are you trying to meet?",
-                          style: TextStyle(color: textColor, fontSize: 20),
+                          style: TextStyle(
+                              color: textColor, fontSize: size.height * 0.02),
                           textAlign: TextAlign.center,
                         )),
                       ),
@@ -291,7 +294,8 @@ class _ProfileFormState extends State<ProfileForm> {
                       Center(
                           child: Text(
                         'What sport do you play/coach?',
-                        style: TextStyle(color: textColor, fontSize: 20),
+                        style: TextStyle(
+                            color: textColor, fontSize: size.height * 0.02),
                         textAlign: TextAlign.center,
                       )),
                       Center(
@@ -322,43 +326,36 @@ class _ProfileFormState extends State<ProfileForm> {
                           },
                         ),
                       ),
+                      Padding(
+                          padding:
+                              EdgeInsets.symmetric(vertical: size.height * .02),
+                          child: Center(
+                            child: SizedBox(
+                              width: size.width * 0.8,
+                              child: RaisedButton(
+                                color: isButtonEnabled(state)
+                                    ? textColor
+                                    : blueColor,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        size.height * 0.05)),
+                                onPressed: () {
+                                  if (isButtonEnabled(state)) {
+                                    _onSubmitted();
+                                  } else {}
+                                },
+                                child: Text(
+                                  "Save",
+                                  style: TextStyle(
+                                      color: isButtonEnabled(state)
+                                          ? blueColor
+                                          : textColor),
+                                ),
+                              ),
+                            ),
+                          ))
                     ],
                   ),
-                  Padding(
-                      padding:
-                          EdgeInsets.symmetric(vertical: size.height * 0.02),
-                      child: SizedBox(
-                        width: size.width * 0.8,
-                        child: RaisedButton(
-                          color: isButtonEnabled(state) ? textColor : blueColor,
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(size.height * 0.05)),
-                          onPressed: () {
-                            if (isButtonEnabled(state)) {
-                              _onSubmitted();
-                            } else {}
-                          },
-                          child: Container(
-                            width: size.width * 0.8,
-                            height: size.height * 0.06,
-                            decoration: BoxDecoration(
-                              color: isButtonEnabled(state)
-                                  ? textColor
-                                  : blueColor,
-                              borderRadius:
-                                  BorderRadius.circular(size.height * 0.05),
-                            ),
-                            child: Center(
-                                child: Text(
-                              "Save",
-                              style: TextStyle(
-                                  fontSize: size.height * 0.025,
-                                  color: Colors.blue),
-                            )),
-                          ),
-                        ),
-                      ))
                 ],
               ),
             ),
