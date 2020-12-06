@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "796878510838",
+    "firebase_url": "https://scoutu-6640b-default-rtdb.firebaseio.com",
+    "project_id": "scoutu-6640b",
+    "storage_bucket": "scoutu-6640b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:796878510838:android:48611759749839b4f7aad7",
+        "android_client_info": {
+          "package_name": "com.example.socutu_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "796878510838-b0jfnjsb2tosq1pph4vock307ajdpqfu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1nDqDhwfD7RQXtBJ0YM61SMgvg0d5tpA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "796878510838-b0jfnjsb2tosq1pph4vock307ajdpqfu.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "796878510838-ltupqkfph8l74r9muqaos1q6qlhdoka1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.scoutuApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
