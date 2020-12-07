@@ -41,7 +41,8 @@ dependencies:
   uuid: ^2.0.4
   latlong: ^0.6.1
   firebase_messaging: ^6.0.0
-
+  permission_handler: ^5.0.1+1
+  url_launcher: ^5.7.10
 
 dev_dependencies:
   flutter_test:
@@ -56,6 +57,7 @@ flutter:
   assets:
     - assets/profilephoto.png
     - assets/logoTransparent.png
+    - text/privacypolicy.txt
 
 
 

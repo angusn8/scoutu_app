@@ -10,8 +10,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   UserRepository _userRepository;
 
   ProfileBloc({@required UserRepository userRepository})
-      : assert(userRepository != null),
-        _userRepository = userRepository,
+      : _userRepository = userRepository,
         super();
 
   @override
@@ -101,7 +100,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   }
 
   Stream<ProfileState> _mapSportChangedToState(String sport) async* {
-    yield state.update(isBioEmpty: sport == null);
+    yield state.update(isSportEmpty: sport == null);
   }
 
   Stream<ProfileState> _mapSubmittedToState({

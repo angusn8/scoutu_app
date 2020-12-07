@@ -13,21 +13,23 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:scoutu_app/ui/widgets/tabs.dart';
+import 'package:permission_handler/permission_handler.dart';
 
-class ProfileForm extends StatefulWidget {
+class ProfileUpdateForm extends StatefulWidget {
   final UserRepository _userRepository;
 
-  ProfileForm({@required UserRepository userRepository})
+  ProfileUpdateForm({@required UserRepository userRepository})
       : assert(userRepository != null),
         _userRepository = userRepository;
 
   @override
-  _ProfileFormState createState() => _ProfileFormState();
+  _ProfileUpdateState createState() => _ProfileUpdateState(_userRepository);
 }
 
-class _ProfileFormState extends State<ProfileForm> {
+class _ProfileUpdateState extends State<ProfileUpdateForm> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _bioController = TextEditingController();
+  final UserRepository _userRepository;
 
   String userType, seeking, sport;
   String classOf;
@@ -35,6 +37,8 @@ class _ProfileFormState extends State<ProfileForm> {
   String bio;
   GeoPoint location;
   ProfileBloc _profileBloc;
+
+  _ProfileUpdateState(this._userRepository);
 
   //UserRepository get _userRepository => widget._userRepository;
 
@@ -64,7 +68,7 @@ class _ProfileFormState extends State<ProfileForm> {
   _onSubmitted() async {
     await _getLocation();
     _profileBloc.add(
-      Submitted(
+      Updated(
           name: _nameController.text,
           bio: _bioController.text,
           classOf: classOf,
@@ -79,7 +83,7 @@ class _ProfileFormState extends State<ProfileForm> {
   @override
   void initState() {
     _getLocation();
-    _profileBloc = BlocProvider.of<ProfileBloc>(context);
+    _profileBloc = ProfileBloc(userRepository: _userRepository);
     super.initState();
   }
 
@@ -93,48 +97,13 @@ class _ProfileFormState extends State<ProfileForm> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    UserRepository userRepository;
 
-    return BlocListener<ProfileBloc, ProfileState>(
-      //bloc: _profileBloc,
-      listener: (context, state) {
-        if (state.isFailure) {
-          print("Failed");
-          Scaffold.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              SnackBar(
-                content: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text('Profile Creation Unsuccesful'),
-                    Icon(Icons.error)
-                  ],
-                ),
-              ),
-            );
-        }
-        if (state.isSubmitting) {
-          print("Submitting");
-          Scaffold.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              SnackBar(
-                content: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text('Submitting'),
-                    CircularProgressIndicator()
-                  ],
-                ),
-              ),
-            );
-        }
-        if (state.isSuccess) {
-          print("Success!");
-          BlocProvider.of<AuthenticationBloc>(context).add(LoggedIn());
-        }
-      },
+    return BlocProvider<ProfileBloc>(
+      create: (BuildContext context) =>
+          ProfileBloc(userRepository: userRepository),
       child: BlocBuilder<ProfileBloc, ProfileState>(
+        bloc: _profileBloc,
         builder: (context, state) {
           var dropdownValue;
           var dropdownValueUserType;
@@ -157,24 +126,33 @@ class _ProfileFormState extends State<ProfileForm> {
                       child: photo == null
                           ? GestureDetector(
                               onTap: () async {
-                                File getPic = await FilePicker.getFile(
-                                    type: FileType.image);
-                                if (getPic != null) {
-                                  setState(() {
-                                    photo = getPic;
-                                  });
-                                }
+                                if (await Permission.photos
+                                    .request()
+                                    .isGranted) {
+                                  File getPic = await FilePicker.getFile(
+                                      type: FileType.image);
+                                  if (getPic != null) {
+                                    setState(() {
+                                      photo = getPic;
+                                    });
+                                  }
+                                } else {}
                               },
                               child: Image.asset('assets/profilephoto.png'),
                             )
                           : GestureDetector(
                               onTap: () async {
-                                File getPic = await FilePicker.getFile(
-                                    type: FileType.image);
-                                if (getPic != null) {
-                                  setState(() {
-                                    photo = getPic;
-                                  });
+                                if (await Permission.photos
+                                    .request()
+                                    .isGranted) {
+                                  File getPic = await FilePicker.getFile(
+                                      type: FileType.image);
+
+                                  if (getPic != null) {
+                                    setState(() {
+                                      photo = getPic;
+                                    });
+                                  } else {}
                                 }
                               },
                               child: CircleAvatar(
@@ -320,7 +298,6 @@ class _ProfileFormState extends State<ProfileForm> {
                           }).toList(),
                           onChanged: (value) {
                             setState(() {
-                              dropdownValueSport = value;
                               sport = value;
                             });
                           },
@@ -342,6 +319,7 @@ class _ProfileFormState extends State<ProfileForm> {
                                 onPressed: () {
                                   if (isButtonEnabled(state)) {
                                     _onSubmitted();
+                                    print(userRepository);
                                   } else {}
                                 },
                                 child: Text(

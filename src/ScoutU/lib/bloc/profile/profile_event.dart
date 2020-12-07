@@ -5,8 +5,6 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 
 abstract class ProfileEvent extends Equatable {
-  const ProfileEvent();
-
   @override
   List<Object> get props => [];
 }
