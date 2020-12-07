@@ -28,6 +28,16 @@
 	<string>This app requires access to your location.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Photo Library Access Warning</string>
+	<key>NSContactUsageDescription</key>
+	<string>Contacts Access Warning</string>
+	<key>NSCalendarsLibraryUsageDescription</key>
+	<string>Calendars Access Warning</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Apple Music Access Warning</string>
+	<key>NSMotionUsageDescription</key>
+	<string>Motion Access Warning</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Speech Recognition Access Warning</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
