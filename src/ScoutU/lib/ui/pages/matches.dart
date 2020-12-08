@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:scoutu_app/bloc/matches/matches_bloc.dart';
-import 'package:scoutu_app/bloc/matches/matches_event.dart';
-import 'package:scoutu_app/bloc/matches/matches_state.dart';
-import 'package:scoutu_app/models/user.dart';
-import 'package:scoutu_app/repositories/matchesRepository.dart';
-import 'package:scoutu_app/ui/constants.dart';
-import 'package:scoutu_app/ui/widgets/iconWidget.dart';
-import 'package:scoutu_app/ui/widgets/pageTurn.dart';
-import 'package:scoutu_app/ui/widgets/profile.dart';
+import 'package:ScoutU/bloc/matches/matches_bloc.dart';
+import 'package:ScoutU/bloc/matches/matches_event.dart';
+import 'package:ScoutU/bloc/matches/matches_state.dart';
+import 'package:ScoutU/models/user.dart';
+import 'package:ScoutU/repositories/matchesRepository.dart';
+import 'package:ScoutU/ui/constants.dart';
+import 'package:ScoutU/ui/widgets/iconWidget.dart';
+import 'package:ScoutU/ui/widgets/pageTurn.dart';
+import 'package:ScoutU/ui/widgets/profile.dart';
 
 import 'messaging.dart';
 
@@ -274,16 +274,14 @@ class _MatchesState extends State<Matches> {
                                                   children: <Widget>[
                                                     Expanded(
                                                         child: Text(
-                                                      "${selectedUser.name}" +
-                                                          " " +
-                                                          "${selectedUser.classOf}",
+                                                      "${selectedUser.name}",
                                                       textAlign:
                                                           TextAlign.start,
                                                       style: TextStyle(
                                                           color: Colors.white,
                                                           fontSize:
                                                               size.height *
-                                                                  0.025),
+                                                                  0.0225),
                                                     ))
                                                   ],
                                                 ),
@@ -305,6 +303,7 @@ class _MatchesState extends State<Matches> {
                                                     Icon(
                                                       Icons.location_on,
                                                       color: Colors.white,
+                                                      size: size.height * 0.015,
                                                     ),
                                                     Text(
                                                       difference != null
@@ -314,8 +313,10 @@ class _MatchesState extends State<Matches> {
                                                               " km away"
                                                           : "away",
                                                       style: TextStyle(
-                                                        color: Colors.white,
-                                                      ),
+                                                          color: Colors.white,
+                                                          fontSize:
+                                                              size.height *
+                                                                  0.015),
                                                     ),
                                                   ],
                                                 ),

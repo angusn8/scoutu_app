@@ -1,10 +1,10 @@
 import 'dart:io';
 
-import 'package:scoutu_app/bloc/authentication/authentication_bloc.dart';
-import 'package:scoutu_app/bloc/authentication/authentication_event.dart';
-import 'package:scoutu_app/bloc/profile/bloc.dart';
-import 'package:scoutu_app/repositories/userRepository.dart';
-import 'package:scoutu_app/ui/constants.dart';
+import 'package:ScoutU/bloc/authentication/authentication_bloc.dart';
+import 'package:ScoutU/bloc/authentication/authentication_event.dart';
+import 'package:ScoutU/bloc/profile/bloc.dart';
+import 'package:ScoutU/repositories/userRepository.dart';
+import 'package:ScoutU/ui/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +12,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:scoutu_app/ui/widgets/tabs.dart';
+import 'package:ScoutU/ui/widgets/tabs.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class ProfileForm extends StatefulWidget {
@@ -75,7 +75,6 @@ class _ProfileFormState extends State<ProfileForm> {
           photo: photo,
           sport: sport),
     );
-    print(sport);
   }
 
   @override
@@ -142,234 +141,238 @@ class _ProfileFormState extends State<ProfileForm> {
           var dropdownValueUserType;
           var dropdownValueSeeking;
           var dropdownValueSport;
-          return SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Container(
-              color: backgroundColor,
-              width: size.width,
-              height: size.height,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    width: size.width,
-                    child: CircleAvatar(
-                      radius: size.width * 0.3,
-                      backgroundColor: Colors.transparent,
-                      child: photo == null
-                          ? GestureDetector(
-                              onTap: () async {
-                                if (await Permission.photos
-                                    .request()
-                                    .isGranted) {
-                                  File getPic = await FilePicker.getFile(
-                                      type: FileType.image);
-                                  if (getPic != null) {
-                                    setState(() {
-                                      photo = getPic;
-                                    });
-                                  }
-                                } else {}
-                              },
-                              child: Image.asset('assets/profilephoto.png'),
-                            )
-                          : GestureDetector(
-                              onTap: () async {
-                                if (await Permission.photos
-                                    .request()
-                                    .isGranted) {
-                                  File getPic = await FilePicker.getFile(
-                                      type: FileType.image);
-
-                                  if (getPic != null) {
-                                    setState(() {
-                                      photo = getPic;
-                                    });
-                                  } else {}
-                                }
-                              },
-                              child: CircleAvatar(
-                                radius: size.width * 0.3,
-                                backgroundImage: FileImage(photo),
-                              ),
-                            ),
-                    ),
-                  ),
-                  textFieldWidget(
-                    _nameController,
-                    "Name",
-                    size,
-                  ),
-                  textFieldWidget(
-                      _bioController, "Enter a bio with relevant info", size),
-                  Text(
-                    "What high school class are you?",
-                    style: TextStyle(
-                        color: textColor, fontSize: size.height * 0.02),
-                  ),
-                  DropdownButton(
-                    value: dropdownValue,
-                    icon: Icon(Icons.arrow_downward),
-                    style: TextStyle(color: textColor),
-                    underline: Container(height: 2, color: blueColor),
-                    items: <String>[
-                      'I am a Coach',
-                      '2021',
-                      '2022',
-                      '2023',
-                      '2024',
-                      '2025'
-                    ].map((String value) {
-                      return new DropdownMenuItem<String>(
-                        value: value,
-                        child: new Text(value),
-                      );
-                    }).toList(),
-                    onChanged: (value) {
-                      setState(() {
-                        classOf = value;
-                      });
-                    },
-                  ),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: size.height * 0.02),
-                        child: Center(
-                            child: Text(
-                          "Are you a coach or an athlete?",
-                          style: TextStyle(
-                              color: textColor, fontSize: size.height * 0.02),
-                          textAlign: TextAlign.center,
-                        )),
-                      ),
-                      Center(
-                        child: DropdownButton(
-                          value: dropdownValueUserType,
-                          icon: Icon(Icons.arrow_downward),
-                          style: TextStyle(color: textColor),
-                          underline: Container(height: 2, color: blueColor),
-                          items:
-                              <String>['Coach', 'Athlete'].map((String value) {
-                            return new DropdownMenuItem<String>(
-                              value: value,
-                              child: new Text(value),
-                            );
-                          }).toList(),
-                          onChanged: (value) {
-                            setState(() {
-                              userType = value;
-                            });
-                          },
-                        ),
-                      ),
-                      SizedBox(
-                        height: size.height * 0.02,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: size.height * 0.02),
-                        child: Center(
-                            child: Text(
-                          "Who are you trying to meet?",
-                          style: TextStyle(
-                              color: textColor, fontSize: size.height * 0.02),
-                          textAlign: TextAlign.center,
-                        )),
-                      ),
-                      Center(
-                        child: DropdownButton(
-                          value: dropdownValueSeeking,
-                          icon: Icon(Icons.arrow_downward),
-                          style: TextStyle(color: textColor),
-                          underline: Container(height: 2, color: blueColor),
-                          items:
-                              <String>['Coach', 'Athlete'].map((String value) {
-                            return new DropdownMenuItem<String>(
-                              value: value,
-                              child: new Text(value),
-                            );
-                          }).toList(),
-                          onChanged: (value) {
-                            setState(() {
-                              seeking = value;
-                            });
-                          },
-                        ),
-                      ),
-                      Center(
-                          child: Text(
-                        'What sport do you play/coach?',
-                        style: TextStyle(
-                            color: textColor, fontSize: size.height * 0.02),
-                        textAlign: TextAlign.center,
-                      )),
-                      Center(
-                        child: DropdownButton(
-                          value: dropdownValueSport,
-                          icon: Icon(Icons.arrow_downward),
-                          style: TextStyle(color: textColor),
-                          underline: Container(height: 2, color: blueColor),
-                          items: <String>[
-                            'Football',
-                            'Baseball',
-                            'Softball',
-                            "Men's Basketball",
-                            "Women's Basketball",
-                            "Men's Soccer",
-                            "Women's Soccer"
-                          ].map((String value) {
-                            return new DropdownMenuItem<String>(
-                              value: value,
-                              child: new Text(value),
-                            );
-                          }).toList(),
-                          onChanged: (value) {
-                            setState(() {
-                              sport = value;
-                            });
-                          },
-                        ),
-                      ),
-                      Padding(
-                          padding:
-                              EdgeInsets.symmetric(vertical: size.height * .02),
-                          child: Center(
-                            child: SizedBox(
-                              width: size.width * 0.8,
-                              child: RaisedButton(
-                                color: isButtonEnabled(state)
-                                    ? textColor
-                                    : blueColor,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(
-                                        size.height * 0.05)),
-                                onPressed: () {
-                                  if (isButtonEnabled(state)) {
-                                    _onSubmitted();
+          return Column(children: <Widget>[
+            Expanded(
+                child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Container(
+                color: backgroundColor,
+                width: size.width,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                      width: size.width,
+                      margin: EdgeInsets.only(top: size.height * 0.02),
+                      child: CircleAvatar(
+                        radius: size.width * 0.3,
+                        backgroundColor: Colors.transparent,
+                        child: photo == null
+                            ? GestureDetector(
+                                onTap: () async {
+                                  if (await Permission.photos
+                                      .request()
+                                      .isGranted) {
+                                    File getPic = await FilePicker.getFile(
+                                        type: FileType.image);
+                                    if (getPic != null) {
+                                      setState(() {
+                                        photo = getPic;
+                                      });
+                                    }
                                   } else {}
                                 },
-                                child: Text(
-                                  "Save",
-                                  style: TextStyle(
-                                      color: isButtonEnabled(state)
-                                          ? blueColor
-                                          : textColor),
+                                child: Image.asset('assets/profilephoto.png'),
+                              )
+                            : GestureDetector(
+                                onTap: () async {
+                                  if (await Permission.photos
+                                      .request()
+                                      .isGranted) {
+                                    File getPic = await FilePicker.getFile(
+                                        type: FileType.image);
+
+                                    if (getPic != null) {
+                                      setState(() {
+                                        photo = getPic;
+                                      });
+                                    } else {}
+                                  }
+                                },
+                                child: CircleAvatar(
+                                  radius: size.width * 0.3,
+                                  backgroundImage: FileImage(photo),
                                 ),
                               ),
-                            ),
-                          ))
-                    ],
-                  ),
-                ],
+                      ),
+                    ),
+                    textFieldWidget(
+                      _nameController,
+                      "Name",
+                      size,
+                    ),
+                    textFieldWidget(
+                        _bioController, "Enter a bio with relevant info", size),
+                    Text(
+                      "What high school class are you?",
+                      style: TextStyle(
+                          color: textColor, fontSize: size.height * 0.02),
+                    ),
+                    DropdownButton(
+                      value: dropdownValue,
+                      icon: Icon(Icons.arrow_downward),
+                      style: TextStyle(color: textColor),
+                      underline: Container(height: 2, color: blueColor),
+                      items: <String>[
+                        'I am a Coach',
+                        '2021',
+                        '2022',
+                        '2023',
+                        '2024',
+                        '2025'
+                      ].map((String value) {
+                        return new DropdownMenuItem<String>(
+                          value: value,
+                          child: new Text(value),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          classOf = value;
+                        });
+                      },
+                    ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: size.height * 0.02),
+                          child: Center(
+                              child: Text(
+                            "Are you a coach or an athlete?",
+                            style: TextStyle(
+                                color: textColor, fontSize: size.height * 0.02),
+                            textAlign: TextAlign.center,
+                          )),
+                        ),
+                        Center(
+                          child: DropdownButton(
+                            value: dropdownValueUserType,
+                            icon: Icon(Icons.arrow_downward),
+                            style: TextStyle(color: textColor),
+                            underline: Container(height: 2, color: blueColor),
+                            items: <String>['Coach', 'Athlete']
+                                .map((String value) {
+                              return new DropdownMenuItem<String>(
+                                value: value,
+                                child: new Text(value),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                userType = value;
+                              });
+                            },
+                          ),
+                        ),
+                        SizedBox(
+                          height: size.height * 0.02,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: size.height * 0.02),
+                          child: Center(
+                              child: Text(
+                            "Who are you trying to meet?",
+                            style: TextStyle(
+                                color: textColor, fontSize: size.height * 0.02),
+                            textAlign: TextAlign.center,
+                          )),
+                        ),
+                        Center(
+                          child: DropdownButton(
+                            value: dropdownValueSeeking,
+                            icon: Icon(Icons.arrow_downward),
+                            style: TextStyle(color: textColor),
+                            underline: Container(height: 2, color: blueColor),
+                            items: <String>['Coach', 'Athlete']
+                                .map((String value) {
+                              return new DropdownMenuItem<String>(
+                                value: value,
+                                child: new Text(value),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                seeking = value;
+                              });
+                            },
+                          ),
+                        ),
+                        Center(
+                            child: Text(
+                          'What sport do you play/coach?',
+                          style: TextStyle(
+                              color: textColor, fontSize: size.height * 0.02),
+                          textAlign: TextAlign.center,
+                        )),
+                        Center(
+                          child: DropdownButton(
+                            value: dropdownValueSport,
+                            icon: Icon(Icons.arrow_downward),
+                            style: TextStyle(color: textColor),
+                            underline: Container(height: 2, color: blueColor),
+                            items: <String>[
+                              'Football',
+                              'Baseball',
+                              'Softball',
+                              "Men's Basketball",
+                              "Women's Basketball",
+                              "Men's Soccer",
+                              "Women's Soccer"
+                            ].map((String value) {
+                              return new DropdownMenuItem<String>(
+                                value: value,
+                                child: new Text(value),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                dropdownValueSport = value;
+                                sport = value;
+                              });
+                            },
+                          ),
+                        ),
+                        Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: size.height * .02),
+                            child: Center(
+                              child: SizedBox(
+                                width: size.width * 0.8,
+                                child: RaisedButton(
+                                  color: isButtonEnabled(state)
+                                      ? textColor
+                                      : blueColor,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          size.height * 0.05)),
+                                  onPressed: () {
+                                    if (isButtonEnabled(state)) {
+                                      _onSubmitted();
+                                    } else {}
+                                  },
+                                  child: Text(
+                                    "Save",
+                                    style: TextStyle(
+                                        color: isButtonEnabled(state)
+                                            ? blueColor
+                                            : textColor),
+                                  ),
+                                ),
+                              ),
+                            ))
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          );
+            ))
+          ]);
         },
       ),
     );
@@ -380,7 +383,7 @@ Widget textFieldWidget(controller, text, size) {
   return Padding(
     padding: EdgeInsets.all(size.height * 0.02),
     child: TextField(
-      maxLength: 140,
+      maxLength: 110,
       controller: controller,
       decoration: InputDecoration(
         labelText: text,

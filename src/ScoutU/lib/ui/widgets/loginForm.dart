@@ -1,9 +1,9 @@
-import 'package:scoutu_app/bloc/authentication/authentication_bloc.dart';
-import 'package:scoutu_app/bloc/authentication/authentication_event.dart';
-import 'package:scoutu_app/bloc/login/bloc.dart';
-import 'package:scoutu_app/repositories/userRepository.dart';
-import 'package:scoutu_app/ui/constants.dart';
-import 'package:scoutu_app/ui/pages/signUp.dart';
+import 'package:ScoutU/bloc/authentication/authentication_bloc.dart';
+import 'package:ScoutU/bloc/authentication/authentication_event.dart';
+import 'package:ScoutU/bloc/login/bloc.dart';
+import 'package:ScoutU/repositories/userRepository.dart';
+import 'package:ScoutU/ui/constants.dart';
+import 'package:ScoutU/ui/pages/signUp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -128,7 +128,7 @@ class _LoginFormState extends State<LoginForm> {
                     child: Image(
                       image: AssetImage('assets/logoTransparent.png'),
                       height: size.height * .25,
-                      width: 200,
+                      width: size.width * 0.6,
                       fit: BoxFit.fill,
                     ),
                   ),

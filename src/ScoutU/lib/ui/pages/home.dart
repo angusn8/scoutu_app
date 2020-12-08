@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:scoutu_app/bloc/authentication/authentication_bloc.dart';
-import 'package:scoutu_app/bloc/authentication/authentication_state.dart';
-import 'package:scoutu_app/repositories/userRepository.dart';
-import 'package:scoutu_app/ui/pages/profile.dart';
-import 'package:scoutu_app/ui/pages/splash.dart';
-import 'package:scoutu_app/ui/widgets/tabs.dart';
+import 'package:ScoutU/bloc/authentication/authentication_bloc.dart';
+import 'package:ScoutU/bloc/authentication/authentication_state.dart';
+import 'package:ScoutU/repositories/userRepository.dart';
+import 'package:ScoutU/ui/pages/profile.dart';
+import 'package:ScoutU/ui/pages/splash.dart';
+import 'package:ScoutU/ui/widgets/tabs.dart';
 
 import 'login.dart';
 

@@ -1,5 +1,5 @@
-import 'package:scoutu_app/models/message.dart';
-import 'package:scoutu_app/models/user.dart';
+import 'package:ScoutU/models/message.dart';
+import 'package:ScoutU/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MessageRepository {

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:bloc/bloc.dart';
-import 'package:scoutu_app/repositories/userRepository.dart';
+import 'package:ScoutU/repositories/userRepository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:meta/meta.dart';
 import './bloc.dart';
@@ -10,7 +10,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   UserRepository _userRepository;
 
   ProfileBloc({@required UserRepository userRepository})
-      : _userRepository = userRepository,
+      : assert(userRepository != null),
+        _userRepository = userRepository,
         super();
 
   @override
@@ -44,7 +45,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           classOf: event.classOf,
           location: event.location,
           bio: event.bio,
-          seeking: event.seeking);
+          seeking: event.seeking,
+          sport: event.sport);
     } else if (event is Updated) {
       final uid = await _userRepository.getUser();
       yield* _mapUpdatedToState(
@@ -55,7 +57,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           classOf: event.classOf,
           location: event.location,
           bio: event.bio,
-          seeking: event.seeking);
+          seeking: event.seeking,
+          sport: event.sport);
     }
   }
 

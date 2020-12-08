@@ -1,4 +1,4 @@
-import 'package:scoutu_app/models/user.dart';
+import 'package:ScoutU/models/user.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class SearchState extends Equatable {

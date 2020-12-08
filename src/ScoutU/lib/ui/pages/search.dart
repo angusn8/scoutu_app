@@ -1,9 +1,9 @@
-import 'package:scoutu_app/bloc/search/bloc.dart';
-import 'package:scoutu_app/models/user.dart';
-import 'package:scoutu_app/repositories/searchRepository.dart';
-import 'package:scoutu_app/ui/constants.dart';
-import 'package:scoutu_app/ui/widgets/iconWidget.dart';
-import 'package:scoutu_app/ui/widgets/profile.dart';
+import 'package:ScoutU/bloc/search/bloc.dart';
+import 'package:ScoutU/models/user.dart';
+import 'package:ScoutU/repositories/searchRepository.dart';
+import 'package:ScoutU/ui/constants.dart';
+import 'package:ScoutU/ui/widgets/iconWidget.dart';
+import 'package:ScoutU/ui/widgets/profile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';

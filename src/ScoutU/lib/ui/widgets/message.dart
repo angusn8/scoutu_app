@@ -1,7 +1,7 @@
-import 'package:scoutu_app/models/message.dart';
-import 'package:scoutu_app/repositories/messaging.dart';
-import 'package:scoutu_app/ui/constants.dart';
-import 'package:scoutu_app/ui/widgets/photo.dart';
+import 'package:ScoutU/models/message.dart';
+import 'package:ScoutU/repositories/messaging.dart';
+import 'package:ScoutU/ui/constants.dart';
+import 'package:ScoutU/ui/widgets/photo.dart';
 import 'package:flutter/material.dart';
 import 'package:timeago/timeago.dart' as timeago;
 

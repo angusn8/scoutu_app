@@ -1,7 +1,7 @@
-import 'package:scoutu_app/bloc/signup/bloc.dart';
-import 'package:scoutu_app/repositories/userRepository.dart';
-import 'package:scoutu_app/ui/constants.dart';
-import 'package:scoutu_app/ui/widgets/signUpForm.dart';
+import 'package:ScoutU/bloc/signup/bloc.dart';
+import 'package:ScoutU/repositories/userRepository.dart';
+import 'package:ScoutU/ui/constants.dart';
+import 'package:ScoutU/ui/widgets/signUpForm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

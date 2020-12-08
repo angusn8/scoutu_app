@@ -4,14 +4,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:scoutu_app/bloc/messaging/messaging_bloc.dart';
-import 'package:scoutu_app/bloc/messaging/messaging_event.dart';
-import 'package:scoutu_app/bloc/messaging/messaging_state.dart';
-import 'package:scoutu_app/models/message.dart';
-import 'package:scoutu_app/models/user.dart';
-import 'package:scoutu_app/repositories/messaging.dart';
-import 'package:scoutu_app/ui/widgets/message.dart';
-import 'package:scoutu_app/ui/widgets/photo.dart';
+import 'package:ScoutU/bloc/messaging/messaging_bloc.dart';
+import 'package:ScoutU/bloc/messaging/messaging_event.dart';
+import 'package:ScoutU/bloc/messaging/messaging_state.dart';
+import 'package:ScoutU/models/message.dart';
+import 'package:ScoutU/models/user.dart';
+import 'package:ScoutU/repositories/messaging.dart';
+import 'package:ScoutU/ui/widgets/message.dart';
+import 'package:ScoutU/ui/widgets/photo.dart';
 
 import '../constants.dart';
 

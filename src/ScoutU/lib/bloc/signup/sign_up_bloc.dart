@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:scoutu_app/repositories/userRepository.dart';
-import 'package:scoutu_app/ui/validators.dart';
+import 'package:ScoutU/repositories/userRepository.dart';
+import 'package:ScoutU/ui/validators.dart';
 import 'package:meta/meta.dart';
 import './bloc.dart';
 import 'package:rxdart/rxdart.dart';

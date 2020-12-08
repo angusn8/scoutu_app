@@ -1,11 +1,11 @@
-import 'package:scoutu_app/bloc/authentication/authentication_bloc.dart';
-import 'package:scoutu_app/bloc/authentication/authentication_event.dart';
-import 'package:scoutu_app/bloc/signup/bloc.dart';
-import 'package:scoutu_app/repositories/userRepository.dart';
+import 'package:ScoutU/bloc/authentication/authentication_bloc.dart';
+import 'package:ScoutU/bloc/authentication/authentication_event.dart';
+import 'package:ScoutU/bloc/signup/bloc.dart';
+import 'package:ScoutU/repositories/userRepository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:scoutu_app/ui/pages/search.dart';
-import 'package:scoutu_app/ui/widgets/profileForm.dart';
+import 'package:ScoutU/ui/pages/search.dart';
+import 'package:ScoutU/ui/widgets/profileForm.dart';
 
 import '../constants.dart';
 
@@ -108,8 +108,8 @@ class _SignUpFormState extends State<SignUpForm> {
                   Center(
                     child: Image(
                       image: AssetImage('assets/logoTransparent.png'),
-                      height: 250,
-                      width: 300,
+                      height: size.height * 0.25,
+                      width: size.width * 0.6,
                       fit: BoxFit.fill,
                     ),
                   ),

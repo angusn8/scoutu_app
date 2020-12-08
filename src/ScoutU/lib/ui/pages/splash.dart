@@ -14,8 +14,8 @@ class Splash extends StatelessWidget {
         child: Center(
           child: Image(
             image: AssetImage('assets/logoTransparent.png'),
-            height: 250,
-            width: 300,
+            height: size.height * 0.4,
+            width: size.height * 0.6,
             fit: BoxFit.fill,
           ),
         ),

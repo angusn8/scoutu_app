@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:scoutu_app/bloc/login/login_bloc.dart';
-import 'package:scoutu_app/repositories/userRepository.dart';
-import 'package:scoutu_app/ui/widgets/loginForm.dart';
+import 'package:ScoutU/bloc/login/login_bloc.dart';
+import 'package:ScoutU/repositories/userRepository.dart';
+import 'package:ScoutU/ui/widgets/loginForm.dart';
 
 import '../constants.dart';
 
@@ -18,7 +18,7 @@ class Login extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: blueColor,
+        backgroundColor: backgroundColor,
         elevation: 0,
       ),
       body: BlocProvider<LoginBloc>(

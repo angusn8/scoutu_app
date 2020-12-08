@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:scoutu_app/bloc/profile/profile_bloc.dart';
-import 'package:scoutu_app/repositories/userRepository.dart';
-import 'package:scoutu_app/ui/pages/privacyPolicy.dart';
-import 'package:scoutu_app/ui/pages/profile.dart';
-import 'package:scoutu_app/ui/pages/profileUpdate.dart';
-import 'package:scoutu_app/ui/widgets/profileUpdateForm.dart';
+import 'package:ScoutU/bloc/profile/profile_bloc.dart';
+import 'package:ScoutU/repositories/userRepository.dart';
+import 'package:ScoutU/ui/pages/privacyPolicy.dart';
+import 'package:ScoutU/ui/pages/profile.dart';
+import 'package:ScoutU/ui/pages/profileUpdate.dart';
+import 'package:ScoutU/ui/widgets/profileUpdateForm.dart';
 
 import '../constants.dart';
 import 'contact.dart';

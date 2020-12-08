@@ -1,4 +1,4 @@
-import 'package:scoutu_app/models/message.dart';
+import 'package:ScoutU/models/message.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class MessagingEvent extends Equatable {

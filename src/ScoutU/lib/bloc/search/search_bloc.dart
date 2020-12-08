@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:scoutu_app/models/user.dart';
-import 'package:scoutu_app/repositories/searchRepository.dart';
+import 'package:ScoutU/models/user.dart';
+import 'package:ScoutU/repositories/searchRepository.dart';
 import 'package:meta/meta.dart';
 import './bloc.dart';
 

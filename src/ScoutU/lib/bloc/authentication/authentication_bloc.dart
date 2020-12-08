@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:scoutu_app/repositories/userRepository.dart';
+import 'package:ScoutU/repositories/userRepository.dart';
 import 'package:flutter/cupertino.dart';
 import './bloc.dart';
 

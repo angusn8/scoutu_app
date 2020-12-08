@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:scoutu_app/bloc/message/message_bloc.dart';
-import 'package:scoutu_app/bloc/message/message_event.dart';
-import 'package:scoutu_app/bloc/message/message_state.dart';
-import 'package:scoutu_app/repositories/messageRepository.dart';
-import 'package:scoutu_app/ui/constants.dart';
-import 'package:scoutu_app/ui/widgets/chat.dart';
+import 'package:ScoutU/bloc/message/message_bloc.dart';
+import 'package:ScoutU/bloc/message/message_event.dart';
+import 'package:ScoutU/bloc/message/message_state.dart';
+import 'package:ScoutU/repositories/messageRepository.dart';
+import 'package:ScoutU/ui/constants.dart';
+import 'package:ScoutU/ui/widgets/chat.dart';
 
 class Messages extends StatefulWidget {
   final String userId;

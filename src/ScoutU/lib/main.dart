@@ -1,7 +1,7 @@
-import 'package:scoutu_app/bloc/authentication/authentication_bloc.dart';
-import 'package:scoutu_app/bloc/blocDelegate.dart';
-import 'package:scoutu_app/repositories/userRepository.dart';
-import 'package:scoutu_app/ui/pages/home.dart';
+import 'package:ScoutU/bloc/authentication/authentication_bloc.dart';
+import 'package:ScoutU/bloc/blocDelegate.dart';
+import 'package:ScoutU/repositories/userRepository.dart';
+import 'package:ScoutU/ui/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

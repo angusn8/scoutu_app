@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:scoutu_app/repositories/messageRepository.dart';
+import 'package:ScoutU/repositories/messageRepository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:meta/meta.dart';
 import './bloc.dart';

@@ -1,4 +1,4 @@
-import 'package:scoutu_app/ui/widgets/photo.dart';
+import 'package:ScoutU/ui/widgets/photo.dart';
 import 'package:flutter/material.dart';
 
 Widget profileWidget(

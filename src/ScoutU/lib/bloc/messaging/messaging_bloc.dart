@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:scoutu_app/models/message.dart';
-import 'package:scoutu_app/repositories/messaging.dart';
+import 'package:ScoutU/models/message.dart';
+import 'package:ScoutU/repositories/messaging.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:meta/meta.dart';
 import './bloc.dart';

@@ -1,13 +1,13 @@
-import 'package:scoutu_app/bloc/authentication/authentication_bloc.dart';
-import 'package:scoutu_app/bloc/authentication/authentication_event.dart';
-import 'package:scoutu_app/repositories/userRepository.dart';
-import 'package:scoutu_app/ui/pages/matches.dart';
-import 'package:scoutu_app/ui/pages/messages.dart';
-import 'package:scoutu_app/ui/pages/profile.dart';
-import 'package:scoutu_app/ui/pages/search.dart';
+import 'package:ScoutU/bloc/authentication/authentication_bloc.dart';
+import 'package:ScoutU/bloc/authentication/authentication_event.dart';
+import 'package:ScoutU/repositories/userRepository.dart';
+import 'package:ScoutU/ui/pages/matches.dart';
+import 'package:ScoutU/ui/pages/messages.dart';
+import 'package:ScoutU/ui/pages/profile.dart';
+import 'package:ScoutU/ui/pages/search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:scoutu_app/ui/pages/settings.dart';
+import 'package:ScoutU/ui/pages/settings.dart';
 
 import '../constants.dart';
 
