@@ -116,7 +116,7 @@ class _MatchesState extends State<Matches> {
                                                   style: TextStyle(
                                                       color: Colors.white,
                                                       fontSize:
-                                                          size.height * 0.04),
+                                                          size.height * 0.0225),
                                                 ),
                                               )
                                             ],
@@ -129,7 +129,7 @@ class _MatchesState extends State<Matches> {
                                                 style: TextStyle(
                                                     color: Colors.white,
                                                     fontSize:
-                                                        size.height * .02),
+                                                        size.height * .015),
                                               ))
                                             ],
                                           ),
@@ -138,6 +138,7 @@ class _MatchesState extends State<Matches> {
                                               Icon(
                                                 Icons.location_on,
                                                 color: Colors.white,
+                                                size: size.height * 0.015,
                                               ),
                                               Text(
                                                 difference != null
@@ -148,6 +149,7 @@ class _MatchesState extends State<Matches> {
                                                     : "away",
                                                 style: TextStyle(
                                                   color: Colors.white,
+                                                  fontSize: size.height * 0.015,
                                                 ),
                                               )
                                             ],
