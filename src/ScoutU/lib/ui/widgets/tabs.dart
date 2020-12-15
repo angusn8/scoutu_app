@@ -54,7 +54,35 @@ class Tabs extends StatelessWidget {
               IconButton(
                 icon: Icon(Icons.exit_to_app),
                 onPressed: () {
-                  BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());
+                  showDialog(
+                      context: context,
+                      builder: (_) => AlertDialog(
+                            title: Text("Log Out",
+                                style: TextStyle(color: textColor)),
+                            content: Text(
+                              "Are you sure you want to log out?",
+                              style: TextStyle(color: textColor),
+                            ),
+                            backgroundColor: blueColor,
+                            actions: [
+                              FlatButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text(
+                                    "No",
+                                    style: TextStyle(color: textColor),
+                                  )),
+                              FlatButton(
+                                  onPressed: () {
+                                    BlocProvider.of<AuthenticationBloc>(context)
+                                        .add(LoggedOut());
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text("Log Out",
+                                      style: TextStyle(color: textColor)))
+                            ],
+                          ));
                 },
               )
             ],

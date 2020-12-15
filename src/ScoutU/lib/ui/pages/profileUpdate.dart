@@ -29,7 +29,7 @@ class ProfileUpdate extends StatelessWidget {
       ),
       body: BlocProvider<ProfileBloc>(
         create: (context) => ProfileBloc(userRepository: _userRepository),
-        child: ProfileForm(
+        child: ProfileUpdateForm(
           userRepository: _userRepository,
         ),
       ),

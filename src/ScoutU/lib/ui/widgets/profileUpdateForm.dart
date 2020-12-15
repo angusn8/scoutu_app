@@ -1,13 +1,19 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:ScoutU/bloc/authentication/authentication_bloc.dart';
 import 'package:ScoutU/bloc/authentication/authentication_event.dart';
+import 'package:ScoutU/bloc/matches/matches_event.dart';
 import 'package:ScoutU/bloc/profile/bloc.dart';
+import 'package:ScoutU/bloc/search/bloc.dart';
+import 'package:ScoutU/models/user.dart';
 import 'package:ScoutU/repositories/userRepository.dart';
 import 'package:ScoutU/ui/constants.dart';
 import 'package:ScoutU/ui/pages/settings.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -31,6 +37,7 @@ class _ProfileUpdateState extends State<ProfileUpdateForm> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _bioController = TextEditingController();
   final UserRepository _userRepository;
+  User user;
 
   String userType, seeking, sport;
   String classOf;
@@ -53,7 +60,7 @@ class _ProfileUpdateState extends State<ProfileUpdateForm> {
       classOf != null;
 
   bool isButtonEnabled(ProfileState state) {
-    return isFilled && !state.isSubmitting;
+    return !state.isSubmitting;
   }
 
   _getLocation() async {
@@ -95,10 +102,28 @@ class _ProfileUpdateState extends State<ProfileUpdateForm> {
     super.dispose();
   }
 
+  Future<User> getCurrentUser() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    final FirebaseUser user = await auth.currentUser();
+    final uid = user.uid;
+
+    var currentUser = await _userRepository.profileGet(uid);
+    return currentUser;
+  }
+
+  User currentUser() {
+    getCurrentUser().then((value) {
+      user = value;
+    });
+    print(user);
+    return user;
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     UserRepository userRepository;
+    user = currentUser();
 
     return BlocProvider<ProfileBloc>(
       create: (BuildContext context) =>
@@ -141,8 +166,29 @@ class _ProfileUpdateState extends State<ProfileUpdateForm> {
                                     }
                                   } else {}
                                 },
-                                child: Image.asset('assets/profilephoto.png'),
-                              )
+                                child: FutureBuilder(
+                                    future: displayImage(context),
+                                    builder: (context, snapshot) {
+                                      if (snapshot.connectionState ==
+                                          ConnectionState.done) {
+                                        return Container(
+                                          width: size.width * 0.5,
+                                          height: size.height * 0.4,
+                                          child: snapshot.data,
+                                        );
+                                      }
+
+                                      if (snapshot.connectionState ==
+                                          ConnectionState.waiting) {
+                                        return Container(
+                                          width: size.width * 0.5,
+                                          height: size.height * 0.4,
+                                          child: CircularProgressIndicator(),
+                                        );
+                                      }
+
+                                      return Container();
+                                    }))
                             : GestureDetector(
                                 onTap: () async {
                                   if (await Permission.photos
@@ -167,17 +213,21 @@ class _ProfileUpdateState extends State<ProfileUpdateForm> {
                     ),
                     textFieldWidget(
                       _nameController,
-                      "Name",
+                      user.name,
                       size,
                     ),
-                    textFieldWidget(
-                        _bioController, "Enter a bio with relevant info", size),
+                    textFieldWidget(_bioController, user.bio, size),
                     Text(
                       "What high school class are you?",
                       style: TextStyle(
                           color: textColor, fontSize: size.height * 0.02),
                     ),
                     DropdownButton(
+                      hint: Center(
+                          child: Text(
+                        user.classOf,
+                        style: TextStyle(color: textColor),
+                      )),
                       value: dropdownValue,
                       icon: Icon(Icons.arrow_downward),
                       style: TextStyle(color: textColor),
@@ -220,6 +270,11 @@ class _ProfileUpdateState extends State<ProfileUpdateForm> {
                         ),
                         Center(
                           child: DropdownButton(
+                            hint: Center(
+                                child: Text(
+                              user.userType,
+                              style: TextStyle(color: textColor),
+                            )),
                             value: dropdownValueUserType,
                             icon: Icon(Icons.arrow_downward),
                             style: TextStyle(color: textColor),
@@ -254,6 +309,11 @@ class _ProfileUpdateState extends State<ProfileUpdateForm> {
                         ),
                         Center(
                           child: DropdownButton(
+                            hint: Center(
+                                child: Text(
+                              user.seeking,
+                              style: TextStyle(color: textColor),
+                            )),
                             value: dropdownValueSeeking,
                             icon: Icon(Icons.arrow_downward),
                             style: TextStyle(color: textColor),
@@ -281,6 +341,11 @@ class _ProfileUpdateState extends State<ProfileUpdateForm> {
                         )),
                         Center(
                           child: DropdownButton(
+                            hint: Center(
+                                child: Text(
+                              user.sport,
+                              style: TextStyle(color: textColor),
+                            )),
                             value: dropdownValueSport,
                             icon: Icon(Icons.arrow_downward),
                             style: TextStyle(color: textColor),
@@ -320,9 +385,7 @@ class _ProfileUpdateState extends State<ProfileUpdateForm> {
                                       borderRadius: BorderRadius.circular(
                                           size.height * 0.05)),
                                   onPressed: () {
-                                    if (isButtonEnabled(state)) {
-                                      _onSubmitted();
-                                    } else {}
+                                    _onSubmitted();
                                   },
                                   child: Text(
                                     "Save",
@@ -365,4 +428,62 @@ Widget textFieldWidget(controller, text, size) {
       ),
     ),
   );
+}
+
+Future<Widget> getImage(BuildContext context, String imageName) async {
+  Image image;
+
+  FirebaseAuth auth = FirebaseAuth.instance;
+  final FirebaseUser user = await auth.currentUser();
+  final uid = user.uid;
+  await FireStorageService.loadImage(context, uid).then((value) {
+    image = Image.network(value.toString(), fit: BoxFit.cover);
+  });
+  return image;
+}
+
+Future<Widget> displayImage(BuildContext context) async {
+  Size size = MediaQuery.of(context).size;
+  FirebaseAuth auth = FirebaseAuth.instance;
+  final FirebaseUser user = await auth.currentUser();
+  final uid = user.uid;
+
+  return FutureBuilder(
+      future: getImage(context, uid),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          return Container(
+            width: size.width * 0.4,
+            height: size.height * 0.4,
+            decoration: BoxDecoration(shape: BoxShape.circle),
+            child: snapshot.data,
+          );
+        }
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Container(
+            width: size.width * 0.5,
+            height: size.height * 0.4,
+            child: CircularProgressIndicator(),
+          );
+        }
+
+        return Container();
+      });
+}
+
+class FireStorageService extends ChangeNotifier {
+  FireStorageService();
+
+  static Future<dynamic> loadImage(BuildContext context, String Image) async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    final FirebaseUser user = await auth.currentUser();
+    final uid = user.uid;
+    return FirebaseStorage.instance
+        .ref()
+        .child('userPhotos')
+        .child(uid)
+        .child(uid)
+        .getDownloadURL();
+  }
 }

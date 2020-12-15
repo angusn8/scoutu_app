@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:ScoutU/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -115,7 +116,7 @@ class UserRepository {
 
     return await storageUploadTask.onComplete.then((ref) async {
       await ref.ref.getDownloadURL().then((url) async {
-        await _firestore.collection('users').document(currentUser).setData({
+        await _firestore.collection('users').document(currentUser).updateData({
           'uid': userId,
           'photoUrl': url,
           'name': name,
@@ -128,5 +129,27 @@ class UserRepository {
         });
       });
     });
+  }
+
+  Future<User> profileGet(
+    String userId,
+  ) async {
+    User user = User();
+
+    await _firestore
+        .collection('users')
+        .document(userId)
+        .get()
+        .then((currentUser) {
+      user.name = currentUser['name'];
+      user.photo = currentUser['photoUrl'];
+      user.userType = currentUser['userType'];
+      user.seeking = currentUser['seeking'];
+      user.bio = currentUser['bio'];
+      user.sport = currentUser['sport'];
+      user.classOf = currentUser['classOf'];
+    });
+
+    return user;
   }
 }

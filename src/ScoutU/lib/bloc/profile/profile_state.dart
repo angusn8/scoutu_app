@@ -1,3 +1,5 @@
+import 'package:ScoutU/models/user.dart';
+import 'package:ScoutU/ui/pages/profile.dart';
 import 'package:meta/meta.dart';
 
 @immutable
@@ -13,6 +15,7 @@ class ProfileState {
   final bool isSuccess;
   final bool isBioEmpty;
   final bool isSportEmpty;
+  final User user;
 
   bool get isFormValid =>
       isPhotoEmpty &&
@@ -24,6 +27,7 @@ class ProfileState {
       isSeekingEmpty;
 
   ProfileState({
+    this.user,
     @required this.isPhotoEmpty,
     @required this.isNameEmpty,
     @required this.isClassOfEmpty,
@@ -39,17 +43,18 @@ class ProfileState {
 
   factory ProfileState.empty() {
     return ProfileState(
-        isPhotoEmpty: false,
-        isFailure: false,
-        isSuccess: false,
-        isSubmitting: false,
-        isNameEmpty: false,
-        isClassOfEmpty: false,
-        isUserTypeEmpty: false,
-        isSeekingEmpty: false,
-        isLocationEmpty: false,
-        isBioEmpty: false,
-        isSportEmpty: false);
+      isPhotoEmpty: false,
+      isFailure: false,
+      isSuccess: false,
+      isSubmitting: false,
+      isNameEmpty: false,
+      isClassOfEmpty: false,
+      isUserTypeEmpty: false,
+      isSeekingEmpty: false,
+      isLocationEmpty: false,
+      isBioEmpty: false,
+      isSportEmpty: false,
+    );
   }
 
   factory ProfileState.loading() {
@@ -150,4 +155,28 @@ class ProfileState {
       isSportEmpty: isSportEmpty ?? this.isSportEmpty,
     );
   }
+
+  factory ProfileState.getUser() {
+    return ProfileState(
+        isPhotoEmpty: null,
+        isNameEmpty: null,
+        isClassOfEmpty: null,
+        isUserTypeEmpty: null,
+        isSeekingEmpty: null,
+        isLocationEmpty: null,
+        isFailure: null,
+        isSubmitting: null,
+        isSuccess: null,
+        isBioEmpty: null,
+        isSportEmpty: null);
+  }
+}
+
+class GetUserState extends ProfileState {
+  final User user;
+
+  GetUserState(this.user);
+
+  @override
+  List<Object> get props => [user];
 }

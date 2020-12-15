@@ -91,6 +91,9 @@ class _ProfileFormState extends State<ProfileForm> {
     super.dispose();
   }
 
+  String dropdownValue = '';
+  String dropdownValueSport = '';
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -137,10 +140,6 @@ class _ProfileFormState extends State<ProfileForm> {
       },
       child: BlocBuilder<ProfileBloc, ProfileState>(
         builder: (context, state) {
-          var dropdownValue;
-          var dropdownValueUserType;
-          var dropdownValueSeeking;
-          var dropdownValueSport;
           return Column(children: <Widget>[
             Expanded(
                 child: SingleChildScrollView(
@@ -148,6 +147,7 @@ class _ProfileFormState extends State<ProfileForm> {
               child: Container(
                 color: backgroundColor,
                 width: size.width,
+                height: size.height,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
@@ -196,6 +196,11 @@ class _ProfileFormState extends State<ProfileForm> {
                               ),
                       ),
                     ),
+                    Text(
+                      "Click Image to Add Profile Picture",
+                      style: TextStyle(
+                          color: textColor, fontSize: size.height * 0.02),
+                    ),
                     textFieldWidget(
                       _nameController,
                       "Name",
@@ -208,166 +213,133 @@ class _ProfileFormState extends State<ProfileForm> {
                       style: TextStyle(
                           color: textColor, fontSize: size.height * 0.02),
                     ),
-                    DropdownButton(
+                    DropdownButton<String>(
+                      hint: Text(dropdownValue),
                       value: dropdownValue,
                       icon: Icon(Icons.arrow_downward),
                       style: TextStyle(color: textColor),
                       underline: Container(height: 2, color: blueColor),
+                      onChanged: (String value) {
+                        setState(() {
+                          classOf = value;
+                          dropdownValue = value;
+                          if (value != 'I am a Coach') {
+                            userType = 'Athlete';
+                            seeking = "Coach";
+                          } else {
+                            userType = "Coach";
+                            seeking = "Athlete";
+                          }
+                        });
+                      },
                       items: <String>[
+                        '',
                         'I am a Coach',
+                        'College Transfer',
                         '2021',
                         '2022',
                         '2023',
                         '2024',
                         '2025'
-                      ].map((String value) {
-                        return new DropdownMenuItem<String>(
+                      ].map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem(
                           value: value,
                           child: new Text(value),
                         );
                       }).toList(),
-                      onChanged: (value) {
-                        setState(() {
-                          classOf = value;
-                        });
-                      },
                     ),
-                    SizedBox(
-                      height: 10.0,
+                    Center(
+                        child: Text(
+                      'What sport do you play/coach?',
+                      style: TextStyle(
+                          color: textColor, fontSize: size.height * 0.02),
+                      textAlign: TextAlign.center,
+                    )),
+                    Center(
+                      child: DropdownButton(
+                        value: dropdownValueSport,
+                        icon: Icon(Icons.arrow_downward),
+                        style: TextStyle(color: textColor),
+                        underline: Container(height: 2, color: blueColor),
+                        items: <String>[
+                          '',
+                          'Football',
+                          'Baseball',
+                          'Softball',
+                          "Men's Basketball",
+                          "Women's Basketball",
+                          "Men's Soccer",
+                          "Women's Soccer"
+                        ].map((String value) {
+                          return new DropdownMenuItem<String>(
+                            value: value,
+                            child: new Text(value),
+                          );
+                        }).toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            dropdownValueSport = value;
+                            sport = value;
+                          });
+                        },
+                      ),
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: size.height * 0.02),
-                          child: Center(
+                    Padding(
+                        padding:
+                            EdgeInsets.symmetric(vertical: size.height * .02),
+                        child: Center(
+                          child: SizedBox(
+                            width: size.width * 0.8,
+                            child: RaisedButton(
+                              color: isButtonEnabled(state)
+                                  ? textColor
+                                  : blueColor,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      size.height * 0.05)),
+                              onPressed: () {
+                                if (isButtonEnabled(state)) {
+                                  _onSubmitted();
+                                } else {
+                                  showDialog(
+                                      context: context,
+                                      builder: (_) => AlertDialog(
+                                            title: Text(
+                                              "Incomplete Profile",
+                                              style:
+                                                  TextStyle(color: textColor),
+                                            ),
+                                            content: Text(
+                                              "Please fill out your entire profile, including the picture. A complete profile will help you grow your network!",
+                                              style:
+                                                  TextStyle(color: textColor),
+                                            ),
+                                            backgroundColor: blueColor,
+                                            actions: [
+                                              FlatButton(
+                                                  color: greenColor,
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  child: Text(
+                                                    "Ok",
+                                                    style: TextStyle(
+                                                        color: textColor),
+                                                  ))
+                                            ],
+                                          ));
+                                }
+                              },
                               child: Text(
-                            "Are you a coach or an athlete?",
-                            style: TextStyle(
-                                color: textColor, fontSize: size.height * 0.02),
-                            textAlign: TextAlign.center,
-                          )),
-                        ),
-                        Center(
-                          child: DropdownButton(
-                            value: dropdownValueUserType,
-                            icon: Icon(Icons.arrow_downward),
-                            style: TextStyle(color: textColor),
-                            underline: Container(height: 2, color: blueColor),
-                            items: <String>['Coach', 'Athlete']
-                                .map((String value) {
-                              return new DropdownMenuItem<String>(
-                                value: value,
-                                child: new Text(value),
-                              );
-                            }).toList(),
-                            onChanged: (value) {
-                              setState(() {
-                                userType = value;
-                              });
-                            },
-                          ),
-                        ),
-                        SizedBox(
-                          height: size.height * 0.02,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: size.height * 0.02),
-                          child: Center(
-                              child: Text(
-                            "Who are you trying to meet?",
-                            style: TextStyle(
-                                color: textColor, fontSize: size.height * 0.02),
-                            textAlign: TextAlign.center,
-                          )),
-                        ),
-                        Center(
-                          child: DropdownButton(
-                            value: dropdownValueSeeking,
-                            icon: Icon(Icons.arrow_downward),
-                            style: TextStyle(color: textColor),
-                            underline: Container(height: 2, color: blueColor),
-                            items: <String>['Coach', 'Athlete']
-                                .map((String value) {
-                              return new DropdownMenuItem<String>(
-                                value: value,
-                                child: new Text(value),
-                              );
-                            }).toList(),
-                            onChanged: (value) {
-                              setState(() {
-                                seeking = value;
-                              });
-                            },
-                          ),
-                        ),
-                        Center(
-                            child: Text(
-                          'What sport do you play/coach?',
-                          style: TextStyle(
-                              color: textColor, fontSize: size.height * 0.02),
-                          textAlign: TextAlign.center,
-                        )),
-                        Center(
-                          child: DropdownButton(
-                            value: dropdownValueSport,
-                            icon: Icon(Icons.arrow_downward),
-                            style: TextStyle(color: textColor),
-                            underline: Container(height: 2, color: blueColor),
-                            items: <String>[
-                              'Football',
-                              'Baseball',
-                              'Softball',
-                              "Men's Basketball",
-                              "Women's Basketball",
-                              "Men's Soccer",
-                              "Women's Soccer"
-                            ].map((String value) {
-                              return new DropdownMenuItem<String>(
-                                value: value,
-                                child: new Text(value),
-                              );
-                            }).toList(),
-                            onChanged: (value) {
-                              setState(() {
-                                dropdownValueSport = value;
-                                sport = value;
-                              });
-                            },
-                          ),
-                        ),
-                        Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: size.height * .02),
-                            child: Center(
-                              child: SizedBox(
-                                width: size.width * 0.8,
-                                child: RaisedButton(
-                                  color: isButtonEnabled(state)
-                                      ? textColor
-                                      : blueColor,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(
-                                          size.height * 0.05)),
-                                  onPressed: () {
-                                    if (isButtonEnabled(state)) {
-                                      _onSubmitted();
-                                    } else {}
-                                  },
-                                  child: Text(
-                                    "Save",
-                                    style: TextStyle(
-                                        color: isButtonEnabled(state)
-                                            ? blueColor
-                                            : textColor),
-                                  ),
-                                ),
+                                "Save",
+                                style: TextStyle(
+                                    color: isButtonEnabled(state)
+                                        ? blueColor
+                                        : textColor),
                               ),
-                            ))
-                      ],
-                    ),
+                            ),
+                          ),
+                        ))
                   ],
                 ),
               ),

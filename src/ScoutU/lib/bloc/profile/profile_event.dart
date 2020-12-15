@@ -123,3 +123,12 @@ class Updated extends ProfileEvent {
   List<Object> get props =>
       [bio, classOf, location, name, photo, seeking, userType, sport];
 }
+
+class Get extends ProfileEvent {
+  final String userId;
+
+  Get({this.userId});
+
+  @override
+  List<Object> get props => [userId];
+}

@@ -5,6 +5,7 @@ import 'package:ScoutU/repositories/userRepository.dart';
 import 'package:ScoutU/ui/constants.dart';
 import 'package:ScoutU/ui/pages/signUp.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginForm extends StatefulWidget {
@@ -190,9 +191,33 @@ class _LoginFormState extends State<LoginForm> {
                     child: Column(
                       children: <Widget>[
                         GestureDetector(
-                          onTap: isLoginButtonEnabled(state)
-                              ? _onFormSubmitted
-                              : null,
+                          onTap: () {
+                            try {
+                              _onFormSubmitted();
+                            } catch (_) {
+                              showDialog(
+                                  context: context,
+                                  builder: (_) => AlertDialog(
+                                        title: Text("Invalid Login",
+                                            style: TextStyle(color: textColor)),
+                                        backgroundColor: blueColor,
+                                        content: Text(
+                                            "Either your email address or password are incorrect, please try again."),
+                                        actions: [
+                                          FlatButton(
+                                              color: greenColor,
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: Text(
+                                                "Try Again",
+                                                style:
+                                                    TextStyle(color: textColor),
+                                              ))
+                                        ],
+                                      ));
+                            }
+                          },
                           child: Container(
                             width: size.width * 0.8,
                             height: size.height * 0.06,

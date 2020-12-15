@@ -59,6 +59,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           bio: event.bio,
           seeking: event.seeking,
           sport: event.sport);
+    } else if (event is Get) {
+      final uid = await _userRepository.getUser();
+      yield* _mapLoadUserToState(userId: uid);
     }
   }
 
@@ -143,6 +146,24 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       await _userRepository.profileUpdate(photo, userType, name, userId,
           classOf, bio, seeking, location, sport);
       yield ProfileState.success();
+    } catch (_) {
+      yield ProfileState.failure();
+    }
+  }
+
+  Stream<ProfileState> _mapLoadUserToState({
+    String userType,
+    String name,
+    String userId,
+    String classOf,
+    String bio,
+    String seeking,
+    GeoPoint location,
+    String sport,
+  }) async* {
+    try {
+      await _userRepository.profileGet(userId);
+      yield ProfileState.getUser();
     } catch (_) {
       yield ProfileState.failure();
     }
