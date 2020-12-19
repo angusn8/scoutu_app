@@ -33,6 +33,26 @@ class _LoginFormState extends State<LoginForm> {
     return isPopulated && !state.isSubmitting;
   }
 
+  Widget showDialog() {
+    return AlertDialog(
+      title: Text("Invalid Login", style: TextStyle(color: textColor)),
+      backgroundColor: blueColor,
+      content: Text(
+          "Either your email address or password are incorrect, please try again."),
+      actions: [
+        FlatButton(
+            color: greenColor,
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text(
+              "Try Again",
+              style: TextStyle(color: textColor),
+            ))
+      ],
+    );
+  }
+
   @override
   void initState() {
     _loginBloc = BlocProvider.of<LoginBloc>(context);
@@ -55,11 +75,21 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 
-  void _onFormSubmitted() {
-    _loginBloc.add(
-      LoginWithCredentialsPressed(
-          email: _emailController.text, password: _passwordController.text),
-    );
+  bool _onFormSubmitted() {
+    bool success;
+
+    try {
+      _loginBloc.add(
+        LoginWithCredentialsPressed(
+            email: _emailController.text, password: _passwordController.text),
+      );
+      success = true;
+    } catch (error) {
+      success = false;
+    }
+
+    print(success);
+    return success;
   }
 
   @override
@@ -192,31 +222,13 @@ class _LoginFormState extends State<LoginForm> {
                       children: <Widget>[
                         GestureDetector(
                           onTap: () {
-                            try {
-                              _onFormSubmitted();
-                            } catch (_) {
-                              showDialog(
-                                  context: context,
-                                  builder: (_) => AlertDialog(
-                                        title: Text("Invalid Login",
-                                            style: TextStyle(color: textColor)),
-                                        backgroundColor: blueColor,
-                                        content: Text(
-                                            "Either your email address or password are incorrect, please try again."),
-                                        actions: [
-                                          FlatButton(
-                                              color: greenColor,
-                                              onPressed: () {
-                                                Navigator.of(context).pop();
-                                              },
-                                              child: Text(
-                                                "Try Again",
-                                                style:
-                                                    TextStyle(color: textColor),
-                                              ))
-                                        ],
-                                      ));
-                            }
+                            if (isLoginButtonEnabled(state) == true) {
+                              if (_onFormSubmitted() == true) {
+                                _onFormSubmitted();
+                              } else {
+                                return showDialog();
+                              }
+                            } else {}
                           },
                           child: Container(
                             width: size.width * 0.8,
