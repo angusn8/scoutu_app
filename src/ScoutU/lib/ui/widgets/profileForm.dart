@@ -317,7 +317,7 @@ class _ProfileFormState extends State<ProfileForm> {
                                             backgroundColor: blueColor,
                                             actions: [
                                               FlatButton(
-                                                  color: greenColor,
+                                                  color: backgroundColor,
                                                   onPressed: () {
                                                     Navigator.of(context).pop();
                                                   },

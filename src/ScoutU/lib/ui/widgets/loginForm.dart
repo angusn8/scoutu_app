@@ -41,7 +41,7 @@ class _LoginFormState extends State<LoginForm> {
           "Either your email address or password are incorrect, please try again."),
       actions: [
         FlatButton(
-            color: greenColor,
+            color: backgroundColor,
             onPressed: () {
               Navigator.of(context).pop();
             },
